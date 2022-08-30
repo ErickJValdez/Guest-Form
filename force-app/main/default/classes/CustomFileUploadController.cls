@@ -1,16 +1,32 @@
 public with sharing class CustomFileUploadController {
     
     @AuraEnabled
-    public static String uploadFile(String fileName, String base64Data, Id recordId) {
-        // Decoding the base64Data
-        base64Data = EncodingUtil.urlDecode(base64Data, 'UTF-8');
-        ContentVersion cv = new ContentVersion();
-        cv.Title = fileName;
-        cv.PathOnClient = '/' + fileName;
-        cv.FirstPublishLocationId = recordId;
-        cv.VersionData = EncodingUtil.base64Decode(base64Data);
-        cv.IsMajorVersion = true;
-        Insert cv;
-        return 'File upload successfully!';
+    public static String uploadFile(List<Object> filesToInsert) {
+        List<ContentVersion> lstVersionsToInsert = new List<ContentVersion>();
+        System.debug(filesToInsert.size());
+
+        For(Object file : filesToInsert){
+            FileWrapper fileData = (FileWrapper)JSON.deserialize(JSON.serialize(file), FileWrapper.class);
+            // Decoding the base64Data
+            ContentVersion cv = new ContentVersion();
+            cv.Title = fileData.filename;
+            cv.PathOnClient = '/' + fileData.filename;
+            cv.FirstPublishLocationId = fileData.recordId;
+            cv.VersionData = fileData.versionData;
+            lstVersionsToInsert.add(cv);
+        }
+        insert lstVersionsToInsert;
+        return 'Files uploaded successfully!';
+    }
+
+
+    //Wrapper Class
+    public class FileWrapper{
+        @AuraEnabled
+        public String fileName;
+        @AuraEnabled
+        public Blob versionData;   
+        @AuraEnabled
+        public String recordId;       
     }
 }
