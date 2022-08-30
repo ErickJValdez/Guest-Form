@@ -18,9 +18,7 @@
                                    onchange={handleFileChange} type="file"
                                    accept=".jpg, .csv, .png, .doc, .pdf" multiple="true">
                   </lightning-input>
-                  <p if:true={filesName}>{filesName}</p>
-
-
+                
                   <template if:true={filesData}>
                     <template for:each={filesData} for:item="file" for:index="index">
                         {file.fileName}
@@ -29,8 +27,6 @@
                 </template>
 
               </lightning-layout-item>
-
-          
 
               <lightning-layout-item size="12" class="slds-var-p-top_small">
                   <lightning-button class="slds-align_absolute-center" variant="brand" label="Upload Files"

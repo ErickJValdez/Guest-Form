@@ -5,21 +5,14 @@ import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 export default class UploadCustomFile extends LightningElement {
     showSpinner = false;
     @api recordId;
-    filesName;
     @track filesData=[];
-    countOfItems;
 
      // getting file 
     handleFileChange(event) {
         let files = event.target.files;
-        console.log('The files length is: '+files.length);
         if(files.length > 0) {
-            let filesName = '';
              for (let i = 0; i < files.length; i++) {
-                console.log('The iterator value is: '+i);
                 let file = files[i];
-
-                filesName = filesName + file.name + ',';
 
                 let reader = new FileReader();
                 reader.onload = () => {
@@ -27,34 +20,25 @@ export default class UploadCustomFile extends LightningElement {
                     let content = reader.result.indexOf(base64) + base64.length;
                     let fileContents = reader.result.substring(content);
                     
-                   this.countOfItems= this.filesData.push({
+                  this.filesData.push({
                         fileName: file.name,
                         versionData: fileContents,
                         recordId: this.recordId
                     }); 
                 };
                 reader.readAsDataURL(file);
-                console.log('The count of items is:'+ this.countOfItems);
              }
-             this.filesName = filesName.slice(0, -1);
         }
-        console.log('The file data length in the handleFileChange is:'+ this.filesData.length);
-        console.log('The files to be uploaded names are: '+this.filesName);
-        console.log('The files data stringify objects are in the handleFileChange: '+ JSON.stringify(this.filesData));
         files = null;
     }
  
     uploadFileHandler() {
-        this.handleSpinner(); 
-
-        console.log('The files data length inside the uploadfileHandler is: '+ this.filesData.length);
-        console.log('The files data stringify objects are in the uploadFileHandler: '+ JSON.stringify(this.filesData));
+        this.handleSpinner();
 
         uploadFile({ filesToInsert: this.filesData}).then(result=>{
             console.log(result);
             this.filesData = null;
-            let title = this.filesName + 'uploaded successfully!!';
-            this.filesName= null;
+            let title = 'Files uploaded successfully!!';
             this.ShowToast('Success!', title, 'success', 'dismissable');
             this.updateRecordView(this.recordId);
         }).catch(err=>{
@@ -62,7 +46,6 @@ export default class UploadCustomFile extends LightningElement {
         }).finally(() => {
           this.handleSpinner();
         })
-    
     }
 
     removeFile(event) {

@@ -3,11 +3,10 @@ public with sharing class CustomFileUploadController {
     @AuraEnabled
     public static String uploadFile(List<Object> filesToInsert) {
         List<ContentVersion> lstVersionsToInsert = new List<ContentVersion>();
-        System.debug(filesToInsert.size());
 
         For(Object file : filesToInsert){
             FileWrapper fileData = (FileWrapper)JSON.deserialize(JSON.serialize(file), FileWrapper.class);
-            // Decoding the base64Data
+
             ContentVersion cv = new ContentVersion();
             cv.Title = fileData.filename;
             cv.PathOnClient = '/' + fileData.filename;
