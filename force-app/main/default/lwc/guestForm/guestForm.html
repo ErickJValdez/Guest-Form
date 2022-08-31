@@ -1,0 +1,50 @@
+<template>
+    <lightning-card title="Guest Form" icon-name="standard:lead">
+        
+        <div class="slds-var-m-around_medium">
+
+            <p
+                class="slds-text-align_center slds-var-m-vertical_medium content"
+            >
+                Page {page}
+
+                
+                  <template if:true={filesData}>
+                    <template for:each={filesData} for:item="file" for:index="index">
+                        {file.fileName}
+                    </template>
+                </template>
+
+            </p>
+            <template if:true={showDetails}>
+
+                <c-details-Step
+                class="slds-show slds-is-relative"
+                onnext={handleNextOfDetails}
+                ></c-details-Step>
+
+            </template>
+            
+            <template if:true={showRequirements}>
+
+                <c-requirements-Step
+                class="slds-show slds-is-relative"
+                onnext={handleNextOfRequirements}
+                onprevious={handlePreviousOfRequirements}
+                ></c-requirements-Step>
+
+            </template>
+
+            <template if:true={showFileUploader}>
+
+                <c-upload-Custom-File
+                class="slds-show"
+                onsave={handleSaveOfUploader}
+                onprevious={handlePreviousOfUploader}
+                update-files-data={filesData}
+                ></c-upload-Custom-File>
+                
+            </template>
+        </div>
+    </lightning-card>
+</template>
