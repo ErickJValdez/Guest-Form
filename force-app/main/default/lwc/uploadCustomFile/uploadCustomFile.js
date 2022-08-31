@@ -5,7 +5,22 @@ import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 export default class UploadCustomFile extends LightningElement {
     showSpinner = false;
     @api recordId;
+    
     @track filesData=[];
+    
+    @api updateFilesData=[];
+
+
+    connectedCallback(){
+        if(this.updateFilesData.length>0){
+            this.updateFilesValues();
+        }
+    }
+
+    updateFilesValues(){
+        var tempFiles = JSON.parse(JSON.stringify(this.updateFilesData));
+        this.filesData = tempFiles;
+    }
 
      // getting file 
     handleFileChange(event) {
@@ -49,7 +64,7 @@ export default class UploadCustomFile extends LightningElement {
     }
 
     removeFile(event) {
-        var index = event.currentTarget.dataset.id;
+        let index = event.currentTarget.dataset.id;
         this.filesData.splice(index, 1);
     }
  
@@ -73,4 +88,15 @@ export default class UploadCustomFile extends LightningElement {
             eval("$A.get('e.force:refreshView').fire();");
        }, 1000); 
     }
+
+
+    //logic Guest Form
+    handlePrevious() {
+        this.dispatchEvent(new CustomEvent('previous', {detail: this.filesData}));
+    }
+
+    handleSave() {
+        this.dispatchEvent(new CustomEvent('save'));
+    }
+
 }
