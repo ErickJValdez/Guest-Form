@@ -7,7 +7,7 @@ export default class UploadCustomFile extends LightningElement {
     @api recordId;
     
     @track filesData=[];
-    
+
     @api updateFilesData=[];
 
 
@@ -16,6 +16,7 @@ export default class UploadCustomFile extends LightningElement {
             this.updateFilesValues();
         }
     }
+
 
     updateFilesValues(){
         var tempFiles = JSON.parse(JSON.stringify(this.updateFilesData));

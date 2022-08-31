@@ -37,26 +37,27 @@
           </lightning-layout>
       </div>
 
+      <div class="slds-align_absolute-center">
 
-      <lightning-layout>
-        <lightning-layout-item>
-            <lightning-button
-                label="Previous"
-                icon-name="utility:chevronleft"
-                onclick={handlePrevious}
-            ></lightning-button>
-        </lightning-layout-item>
-        <lightning-layout-item flexibility="grow"></lightning-layout-item>
-        <lightning-layout-item>
-            <lightning-button
-                label="Save"
-                icon-name="utility:chevronright"
-                icon-position="right"
-                onclick={handleSave}
-            ></lightning-button>
-        </lightning-layout-item>
-    </lightning-layout>
-
+        <lightning-layout>
+            <lightning-layout-item>
+                <lightning-button
+                    label="Previous"
+                    icon-name="utility:chevronleft"
+                    onclick={handlePrevious}
+                ></lightning-button>
+            </lightning-layout-item>
+            <lightning-layout-item flexibility="grow"></lightning-layout-item>
+            <lightning-layout-item>
+                <lightning-button
+                    label="Save"
+                    icon-name="utility:chevronright"
+                    icon-position="right"
+                    onclick={handleSave}
+                ></lightning-button>
+            </lightning-layout-item>
+        </lightning-layout>
+      </div>
   </lightning-card>
   <!-- /Upload files card -->
 </template>
