@@ -1,7 +1,7 @@
-public with sharing class CustomFileUploadController {
+public without sharing class CustomFileUploadController {
     
     @AuraEnabled
-    public static String uploadFile(List<Object> filesToInsert) {
+    public static String uploadFile(List<Object> filesToInsert, String recordId) {
         List<ContentVersion> lstVersionsToInsert = new List<ContentVersion>();
 
         For(Object file : filesToInsert){
@@ -10,22 +10,23 @@ public with sharing class CustomFileUploadController {
             ContentVersion cv = new ContentVersion();
             cv.Title = fileData.filename;
             cv.PathOnClient = '/' + fileData.filename;
-            cv.FirstPublishLocationId = fileData.recordId;
+            cv.FirstPublishLocationId = recordId;
             cv.VersionData = fileData.versionData;
             lstVersionsToInsert.add(cv);
         }
-        insert lstVersionsToInsert;
+        try{
+            insert lstVersionsToInsert;          
+        } catch (Exception e){
+            System.debug('An exception occurred: ' + e.getMessage());
+        }
+        
         return 'Files uploaded successfully!';
     }
 
 
     //Wrapper Class
     public class FileWrapper{
-        @AuraEnabled
         public String fileName;
-        @AuraEnabled
         public Blob versionData;   
-        @AuraEnabled
-        public String recordId;       
     }
 }

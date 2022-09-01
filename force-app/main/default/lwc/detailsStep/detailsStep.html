@@ -1,8 +1,30 @@
 <template>
     <lightning-card title="Details" icon-name="action:new_note">
 
-        <div class="slds-align_absolute-center">
+        <div class="slds-m-around_medium">
+            <lightning-input label="Name" type="text" onchange={handleNameChange} value={name} required class="slds-m-bottom_x-small validate"></lightning-input>
+            <lightning-input label="Company" type="text" onchange={handleCompanyChange} value={company} required class="slds-m-bottom_x-small validate"></lightning-input>
+            <lightning-input label="Email" type="email" onchange={handleEmailChange} value={email} class="slds-m-bottom_x-small"></lightning-input>
+            <lightning-input label="Phone" type="tel" onchange={handlePhoneChange} value={phone} class="slds-m-bottom_x-small"></lightning-input>        
+            <lightning-input-address
+                address-label="Address"
+                street-label="Street"
+                city-label="City"
+                country-label="Country"
+                province-label="State"
+                postal-code-label="Postal Code"
+                street={street}
+                city={city}
+                country={country}
+                province={province}
+                postal-code={postalcode}
+                field-level-help="Enter your billing address"
+                onchange={handleAddressChange} 
+                >
+            </lightning-input-address>
+        </div>
 
+        <div class="slds-align_absolute-center">
             <lightning-layout>
                 <lightning-layout-item>
                 <lightning-button

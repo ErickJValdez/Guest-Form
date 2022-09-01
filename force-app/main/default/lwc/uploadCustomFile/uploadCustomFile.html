@@ -1,17 +1,7 @@
 <template>
-    <!-- loader -->
-  <div if:true={showSpinner}>
-      <lightning-spinner
-          alternative-text="Loading..." variant="brand" class="slds-is-fixed">
-      </lightning-spinner>
-  </div>
-  <!-----/loader------>
-  <!----header -->
-
-  <!----/header -->
   <!-- Upload files card -->
-  <lightning-card  variant="Narrow"  title="Upload Files" icon-name="standard:file">
-      <div class="slds-var-p-around_small">
+  <lightning-card title="Upload Files" icon-name="standard:file">
+      <div class="slds-m-around_medium">
           <lightning-layout multiple-rows>
               <lightning-layout-item padding="around-small" size="12" medium-device-size="12" large-device-size="12">
                   <lightning-input label="File" name="file uploader"
@@ -25,13 +15,6 @@
                         <span key={file.fileName} data-id={index} onclick={removeFile} class="removeImage">x</span> &nbsp;
                     </template>
                 </template>
-
-              </lightning-layout-item>
-
-              <lightning-layout-item size="12" class="slds-var-p-top_small">
-                  <lightning-button class="slds-align_absolute-center" variant="brand" label="Upload Files"
-                      onclick={uploadFileHandler}>
-                  </lightning-button>
 
               </lightning-layout-item>
           </lightning-layout>
@@ -50,9 +33,10 @@
             <lightning-layout-item flexibility="grow"></lightning-layout-item>
             <lightning-layout-item>
                 <lightning-button
-                    label="Save"
-                    icon-name="utility:chevronright"
-                    icon-position="right"
+                    label="Submit"
+                    icon-name="utility:save"
+                    icon-position="left"
+                    variant="brand" 
                     onclick={handleSave}
                 ></lightning-button>
             </lightning-layout-item>

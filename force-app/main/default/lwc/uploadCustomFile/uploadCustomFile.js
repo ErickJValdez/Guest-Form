@@ -1,13 +1,7 @@
 import { LightningElement, api, track } from 'lwc';
-import uploadFile from '@salesforce/apex/CustomFileUploadController.uploadFile';
-import {ShowToastEvent} from 'lightning/platformShowToastEvent';
-
 export default class UploadCustomFile extends LightningElement {
-    showSpinner = false;
-    @api recordId;
     
     @track filesData=[];
-
     @api updateFilesData=[];
 
 
@@ -16,7 +10,6 @@ export default class UploadCustomFile extends LightningElement {
             this.updateFilesValues();
         }
     }
-
 
     updateFilesValues(){
         var tempFiles = JSON.parse(JSON.stringify(this.updateFilesData));
@@ -39,7 +32,6 @@ export default class UploadCustomFile extends LightningElement {
                   this.filesData.push({
                         fileName: file.name,
                         versionData: fileContents,
-                        recordId: this.recordId
                     }); 
                 };
                 reader.readAsDataURL(file);
@@ -47,49 +39,11 @@ export default class UploadCustomFile extends LightningElement {
         }
         files = null;
     }
- 
-    uploadFileHandler() {
-        this.handleSpinner();
-
-        uploadFile({ filesToInsert: this.filesData}).then(result=>{
-            console.log(result);
-            this.filesData = null;
-            let title = 'Files uploaded successfully!!';
-            this.ShowToast('Success!', title, 'success', 'dismissable');
-            this.updateRecordView(this.recordId);
-        }).catch(err=>{
-            this.ShowToast('Error!!', err.body.message, 'error', 'dismissable');
-        }).finally(() => {
-          this.handleSpinner();
-        })
-    }
 
     removeFile(event) {
         let index = event.currentTarget.dataset.id;
         this.filesData.splice(index, 1);
     }
- 
-    handleSpinner(){
-        this.showSpinner = !this.showSpinner;
-    }
- 
-    ShowToast(title, message, variant, mode){
-        const evt = new ShowToastEvent({
-            title: title,
-            message:message,
-            variant: variant,
-            mode: mode
-        });
-        this.dispatchEvent(evt);
-    } 
- 
-    //update the record page
-    updateRecordView() {
-       setTimeout(() => {
-            eval("$A.get('e.force:refreshView').fire();");
-       }, 1000); 
-    }
-
 
     //logic Guest Form
     handlePrevious() {
@@ -97,7 +51,7 @@ export default class UploadCustomFile extends LightningElement {
     }
 
     handleSave() {
-        this.dispatchEvent(new CustomEvent('save'));
+        this.dispatchEvent(new CustomEvent('save',{detail: this.filesData}));
     }
 
 }

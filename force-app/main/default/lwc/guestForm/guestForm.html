@@ -1,36 +1,31 @@
 <template>
+      <!-- loader -->
+    <div if:true={showSpinner}>
+        <lightning-spinner
+            alternative-text="Loading..." variant="brand" class="slds-is-fixed">
+        </lightning-spinner>
+    </div>
+  <!-----/loader------>
     <lightning-card title="Guest Form" icon-name="standard:lead">
         
         <div class="slds-var-m-around_medium">
-
-            <p
-                class="slds-text-align_center slds-var-m-vertical_medium content"
-            >
-                Page {page}
-
-                
-                  <template if:true={filesData}>
-                    <template for:each={filesData} for:item="file" for:index="index">
-                        {file.fileName}
-                    </template>
-                </template>
-
-            </p>
             <template if:true={showDetails}>
 
                 <c-details-Step
                 class="slds-show slds-is-relative"
                 onnext={handleNextOfDetails}
+                update-details-values={detailsValues}
+
                 ></c-details-Step>
 
             </template>
-            
             <template if:true={showRequirements}>
 
                 <c-requirements-Step
                 class="slds-show slds-is-relative"
                 onnext={handleNextOfRequirements}
                 onprevious={handlePreviousOfRequirements}
+                update-requirement-values={requirementValues}
                 ></c-requirements-Step>
 
             </template>

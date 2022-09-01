@@ -1,8 +1,20 @@
 <template>
     <lightning-card title="Requirements" icon-name="action:new_note">
-        <div class="slds-align_absolute-center">
+               <div class="slds-m-around_medium">
+                   <lightning-input label="Description" onchange={handleDescriptionChange} class="slds-m-bottom_x-small" value={description}></lightning-input>
 
-    
+                   <lightning-combobox
+                        name="progress"
+                        label="Industry"
+                        value={industryValue}
+                        placeholder="Select Progress"
+                        options={options}
+                        onchange={handleIndustryChange} >
+                    </lightning-combobox>
+                    
+               </div>
+
+        <div class="slds-align_absolute-center">  
             <lightning-layout>
                 <lightning-layout-item>
                     <lightning-button
