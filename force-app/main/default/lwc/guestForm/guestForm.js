@@ -75,7 +75,7 @@ export default class GuestForm extends LightningElement {
             this.filesData = null;
             this.detailsValues = null;
             this.requirementValues = null;
-            let title = 'Lead Created Succesfully with Files Uploaded';
+            let title = 'Lead Created Succesfully';
             this.ShowToast('Success!', title, 'success', 'dismissable');
             this.updateRecordView(recId);
         }).catch(err=>{
