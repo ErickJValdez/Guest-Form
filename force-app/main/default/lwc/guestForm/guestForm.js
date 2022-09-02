@@ -1,4 +1,4 @@
-import { LightningElement, api } from 'lwc';
+import { LightningElement } from 'lwc';
 import createLead from '@salesforce/apex/LeadCreationController.createLead';
 import uploadFile from '@salesforce/apex/CustomFileUploadController.uploadFile';
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
@@ -75,7 +75,7 @@ export default class GuestForm extends LightningElement {
             this.filesData = null;
             this.detailsValues = null;
             this.requirementValues = null;
-            let title = 'Lead Created Succesfully';
+            let title = 'Form submitted Successfully';
             this.ShowToast('Success!', title, 'success', 'dismissable');
             this.updateRecordView(recId);
         }).catch(err=>{

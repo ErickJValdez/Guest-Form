@@ -28,8 +28,7 @@ public with sharing class LeadCreationController {
         nLead.Industry = requirementData.industryValue;
 
         try{
-            insert nLead;   
-
+            insert nLead;
             return String.valueOf(nLead.Id);
 
         } catch (Exception e){
@@ -38,7 +37,6 @@ public with sharing class LeadCreationController {
 
             return null;
     }
-
 
     //Wrapper Class
     public class DetailWrapper{
